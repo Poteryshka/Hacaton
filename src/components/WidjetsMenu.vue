@@ -9,6 +9,7 @@
 <script>
     export default{
         name: 'WidjetsMenu',
+       
         methods: {
            addText(){
             this.$emit('addText')
@@ -20,9 +21,8 @@
 <style scoped>
     .menu{
         border: 2px solid black;
-        border-radius: 10px;
-        display: flex;
         padding: 15px;
+        width: 10%;
     }
 
     button{

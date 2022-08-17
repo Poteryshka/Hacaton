@@ -1,9 +1,10 @@
 <template>
         <textarea 
             class="text" 
-            :style="{ top: yCoord + '%', left: xCoord + '%'}"
+            :style="{ top: yCoord + '%', left: xCoord + '%', 'font-size': fontSize + 'px', color: fontColor}"
             draggable="true" 
             @dragstart="startDrag($event, id)"
+            @click="objectSelection"
             >
         </textarea>
 </template>
@@ -16,7 +17,9 @@ export default{
         // id и коорды каждого элемента
         id: Number,
         xCoord: Number,
-        yCoord: Number
+        yCoord: Number,
+        fontSize: Number,
+        fontColor: String
     },
     methods: {
         startDrag(event, id){
@@ -36,13 +39,16 @@ export default{
             event.dataTransfer.setData('width', event.target.style.width)
             event.dataTransfer.setData('height', event.target.style.height)
 
-        }
+        },
+        objectSelection(){
+            this.$emit('objectSelection', "TextBlock", this.id)
+        },
     }
 }
 
 </script>
 
-<style>
+<style scoped>
     .text{
         text-align: left;
         position: absolute;
@@ -52,8 +58,7 @@ export default{
         overflow: hidden;
         width: 200px;
         height: 100px;
+        font-size: 10px;
     }
-   p{
-    font-size: 2em;
-   }
+
 </style>

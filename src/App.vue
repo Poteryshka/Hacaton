@@ -11,13 +11,28 @@
     >
     <!-- Блок с текстом -->
     <!-- id, xCoord, yCoord это пропсы из TextBlock.vue -->
-      <TextBlock
-        v-for="item in items"
-        :key="item.id"
-        :xCoord="item.xCoord"
-        :yCoord="item.yCoord"
-        :id="item.id"
-      ></TextBlock>
+      <div v-if="items.length > 0">
+        <TextBlock
+          v-for="item in items"
+          :key="item.id"
+          :xCoord="item.xCoord"
+          :yCoord="item.yCoord"
+          :id="item.id"
+          :fontSize="item.fontSize"
+          :fontColor="item.color"
+          @objectSelection="objectSelection"
+        ></TextBlock>
+      </div>
+    </div>
+    <div class="objectMenu">
+      <MenuText v-if="selectedObject == 'TextBlock'"
+                :id="selectedObjectId"
+                :fontSizeElement="this.items.find((item) => item.id == selectedObjectId).fontSize"
+                @changeFontSize="changeFontSize"
+                @deleteElement="deleteElement"
+                @changeColorText="changeColorText"
+                ></MenuText>
+                
     </div>
   </div>
 </template>
@@ -26,23 +41,29 @@
 
 import TextBlock from '@/components/TextBlock.vue'
 import WidjetsMenu from '@/components/WidjetsMenu.vue'
+import MenuText from '@/components/MenuText.vue'
+
 
 export default {
   name: 'App',
   components: {
    TextBlock,
    WidjetsMenu,
+   MenuText,
   },
   data (){
     return{
       // Массив объектов, где хранятся данные об элементе
       items: [
-        {
-          id: 0, 
-          xCoord: 5, // коорды по x и y в %, нужны для атрибутов left и top
-          yCoord: 20
-        }
+        // {
+          // id: 0, 
+          // xCoord: 5, // коорды по x и y в %, нужны для атрибутов left и top
+          // yCoord: 20,
+          // fontSize: 10,
+        // }
       ],
+      selectedObject: "none",
+      selectedObjectId : 0,
     }
   },
   methods: {
@@ -75,8 +96,26 @@ export default {
       this.items.push({ // Запись нового элемента в массив объектов
         id: this.items.length, 
         xCoord: 5,
-        yCoord: 20
+        yCoord: 20,
+        fontSize: 10,
+        color: '#000000',
       })
+    },
+    objectSelection(typeObject, id){
+      this.selectedObject = typeObject
+      this.selectedObjectId = id
+    },
+    changeFontSize(fontSizeValue, idElement){
+      const item = this.items.find((item) => item.id == idElement)
+      item.fontSize = fontSizeValue
+    },
+    changeColorText(idElement, colorElement){
+      const item = this.items.find((item) => item.id == idElement)
+      item.color = colorElement
+    },
+    deleteElement(idElement){
+      this.selectedObject = 'none'
+      this.items.splice(idElement, 1)
     }
   },
 }
@@ -95,6 +134,17 @@ export default {
 .container{
   background-color:aqua;
   height:800px;
+  width: 70%;
+}
+
+.objectMenu{
+  background-color: blueviolet;
+  width: 20%;
+  border: 2px solid black;
+}
+
+.all{
+  display: flex;
 }
 
 body{
