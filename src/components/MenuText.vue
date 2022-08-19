@@ -85,7 +85,7 @@
 
 <style scoped>
     .widjetsMenu{
-        width:100%;
+        width:95%;
         padding-left: 5%;
     }
 
