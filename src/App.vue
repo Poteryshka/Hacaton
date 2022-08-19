@@ -28,9 +28,13 @@
       <MenuText v-if="selectedObject == 'TextBlock'"
                 :id="selectedObjectId"
                 :fontSizeElement="this.items.find((item) => item.id == selectedObjectId).fontSize"
+                :xElement="this.items.find((item) => item.id == selectedObjectId).xCoord"
+                :yElement="this.items.find((item) => item.id == selectedObjectId).yCoord"
                 @changeFontSize="changeFontSize"
                 @deleteElement="deleteElement"
                 @changeColorText="changeColorText"
+                @changeXElement="changeXElement"
+                @changeYElement="changeYElement"
                 ></MenuText>
                 
     </div>
@@ -113,6 +117,16 @@ export default {
       const item = this.items.find((item) => item.id == idElement)
       item.color = colorElement
     },
+    changeXElement(idElement, coord){
+      console.log("x:"+coord)
+      const item = this.items.find((item) => item.id == idElement)
+      item.xCoord = coord;
+    },
+    changeYElement(idElement, coord){
+      console.log("y:"+coord)
+      const item = this.items.find((item) => item.id == idElement)
+      item.yCoord = coord;
+    },
     deleteElement(idElement){
       this.selectedObject = 'none'
       this.items.splice(idElement, 1)
@@ -132,19 +146,19 @@ export default {
 }
 
 .container{
-  background-color:aqua;
+  background-color: #FFFFFF;
   height:800px;
-  width: 70%;
+  width: 72%;
 }
 
 .objectMenu{
-  background-color: blueviolet;
-  width: 20%;
-  border: 2px solid black;
+  background-color: #1C2A33;
+  width: 18%;
 }
 
 .all{
   display: flex;
+  justify-content: space-between;
 }
 
 body{
