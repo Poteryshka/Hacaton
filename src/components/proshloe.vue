@@ -32,7 +32,7 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import TextBlock from '@/components/TextBlock.vue'
+import TextBlock from '@/components/Movable.vue'
 import WidjetsMenu from '@/components/WidjetsMenu.vue'
 
 export default {
